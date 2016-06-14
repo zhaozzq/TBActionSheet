@@ -1,3 +1,5 @@
+[yulingtianxia/TBActionSheet](https://github.com/yulingtianxia/TBActionSheet)与[TBAlertController](https://github.com/ThePantsThief/TBAlertController)部分命名冲突，因为项目已大量使用后者，所以对后者前缀进行了替换。以下为原README.
+
 # TBActionSheet
 
 [![CI Status](http://img.shields.io/travis/yulingtianxia/TBActionSheet.svg?style=flat)](https://travis-ci.org/yulingtianxia/TBActionSheet)

@@ -1,19 +1,19 @@
 //
 //  UIView+TBAdditions.m
-//  TBAlertControllerDemo
+//  ZZQAlertControllerDemo
 //
 //  Created by 杨萧玉 on 16/2/16.
 //  Copyright © 2016年 杨萧玉. All rights reserved.
 //
 
-#import "UIView+TBAdditions.h"
+#import "UIView+ZZQAdditions.h"
 #import <objc/runtime.h>
 
-#pragma mark - UIView (TBActionSheet)
+#pragma mark - UIView (ZZQActionSheet)
 
 
 
-@implementation UIView (TBActionSheet)
+@implementation UIView (ZZQActionSheet)
 
 - (void)interruptGesture
 {
@@ -31,19 +31,19 @@
 @end
 
 
-@implementation UIView (TBRectCorner)
+@implementation UIView (ZZQRectCorner)
 
-@dynamic tbRectCorner;
+@dynamic zzqRectCorner;
 
-- (TBRectCorner)tbRectCorner
+- (ZZQRectCorner)zzqRectCorner
 {
-    NSNumber *corner = objc_getAssociatedObject(self, @selector(tbRectCorner));
+    NSNumber *corner = objc_getAssociatedObject(self, @selector(zzqRectCorner));
     return corner.integerValue;
 }
 
-- (void)setTbRectCorner:(TBRectCorner)tbRectCorner
+- (void)setZzqRectCorner:(ZZQRectCorner)zzqRectCorner
 {
-    objc_setAssociatedObject(self, @selector(tbRectCorner), @(tbRectCorner), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(zzqRectCorner), @(zzqRectCorner), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (void)setTopCornerRadius:(CGFloat) radius
@@ -96,20 +96,20 @@
 
 - (void)setCornerRadius:(CGFloat) radius
 {
-    switch (self.tbRectCorner) {
-        case TBRectCornerTop: {
+    switch (self.zzqRectCorner) {
+        case ZZQRectCornerTop: {
             [self setTopCornerRadius:radius];
             break;
         }
-        case TBRectCornerBottom: {
+        case ZZQRectCornerBottom: {
             [self setBottomCornerRadius:radius];
             break;
         }
-        case TBRectCornerNone: {
+        case ZZQRectCornerNone: {
             [self setNoneCorner];
             break;
         }
-        case TBRectCornerAll: {
+        case ZZQRectCornerAll: {
             [self setAllCornerRadius:radius];
             break;
         }

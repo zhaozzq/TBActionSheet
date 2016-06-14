@@ -1,14 +1,14 @@
 //
-//  TBActionBackground.m
-//  TBAlertControllerDemo
+//  ZZQActionBackground.m
+//  ZZQAlertControllerDemo
 //
 //  Created by 杨萧玉 on 16/1/31.
 //  Copyright © 2016年 杨萧玉. All rights reserved.
 //
 
-#import "TBActionBackground.h"
+#import "ZZQActionBackground.h"
 
-@implementation TBActionBackground
+@implementation ZZQActionBackground
 
 - (instancetype)initWithFrame:(CGRect)frame
 {

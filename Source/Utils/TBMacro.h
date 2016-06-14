@@ -1,6 +1,6 @@
 //
 //  TBMacro.h
-//  TBAlertControllerDemo
+//  ZZQAlertControllerDemo
 //
 //  Created by skyline on 15/12/19.
 //  Copyright © 2015年 杨萧玉. All rights reserved.

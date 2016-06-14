@@ -1,20 +1,20 @@
 //
-//  TBActionSheet.h
+//  ZZQActionSheet.h
 //
 //  Created by 杨萧玉 on 15/11/17.
 //  Copyright © 2015年 杨萧玉. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import "TBActionButton.h"
+#import "ZZQActionButton.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class TBActionContainer;
-@protocol TBActionSheetDelegate;
+@class ZZQActionContainer;
+@protocol ZZQActionSheetDelegate;
 
-@interface TBActionSheet : UIView
-@property(nullable,nonatomic,weak) id<TBActionSheetDelegate> delegate;
+@interface ZZQActionSheet : UIView
+@property(nullable,nonatomic,weak) id<ZZQActionSheetDelegate> delegate;
 @property(nonatomic,copy)  NSString * _Nullable  title;
 @property(nonatomic,copy)  NSString * _Nullable  message;
 /**
@@ -22,15 +22,15 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (weak, nonatomic, readonly) UIWindow *previousKeyWindow;
 
-- (instancetype)initWithTitle:(nullable NSString *)title delegate:(nullable id <TBActionSheetDelegate>)delegate cancelButtonTitle:(nullable NSString *)cancelButtonTitle destructiveButtonTitle:(nullable NSString *)destructiveButtonTitle otherButtonTitles:(nullable NSString *)otherButtonTitles, ... NS_REQUIRES_NIL_TERMINATION;
-- (instancetype)initWithTitle:(nullable NSString *)title message:(nullable NSString *)message delegate:(nullable id <TBActionSheetDelegate>)delegate cancelButtonTitle:(nullable NSString *)cancelButtonTitle destructiveButtonTitle:(nullable NSString *)destructiveButtonTitle otherButtonTitles:(nullable NSString *)otherButtonTitles, ... NS_REQUIRES_NIL_TERMINATION;
+- (instancetype)initWithTitle:(nullable NSString *)title delegate:(nullable id <ZZQActionSheetDelegate>)delegate cancelButtonTitle:(nullable NSString *)cancelButtonTitle destructiveButtonTitle:(nullable NSString *)destructiveButtonTitle otherButtonTitles:(nullable NSString *)otherButtonTitles, ... NS_REQUIRES_NIL_TERMINATION;
+- (instancetype)initWithTitle:(nullable NSString *)title message:(nullable NSString *)message delegate:(nullable id <ZZQActionSheetDelegate>)delegate cancelButtonTitle:(nullable NSString *)cancelButtonTitle destructiveButtonTitle:(nullable NSString *)destructiveButtonTitle otherButtonTitles:(nullable NSString *)otherButtonTitles, ... NS_REQUIRES_NIL_TERMINATION;
 - (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
 
 // adds a button with the title. returns the index (0 based) of where it was added. buttons are displayed in the order added except for the
 // destructive and cancel button which will be positioned based on HI requirements. buttons cannot be customized.
 - (NSInteger)addButtonWithTitle:(nullable NSString *)title;
-- (NSInteger)addButtonWithTitle:(nullable NSString *)title style:(TBActionButtonStyle)style;    // returns index of button. 0 based.
-- (NSInteger)addButtonWithTitle:(nullable NSString *)title style:(TBActionButtonStyle)style handler:(void (^ __nullable)( TBActionButton * button))handler;
+- (NSInteger)addButtonWithTitle:(nullable NSString *)title style:(ZZQActionButtonStyle)style;    // returns index of button. 0 based.
+- (NSInteger)addButtonWithTitle:(nullable NSString *)title style:(ZZQActionButtonStyle)style handler:(void (^ __nullable)( ZZQActionButton * button))handler;
 - (nullable NSString *)buttonTitleAtIndex:(NSInteger)buttonIndex;
 @property(nonatomic,readonly) NSInteger numberOfButtons;
 @property(nonatomic) NSInteger cancelButtonIndex;      // if the delegate does not implement -actionSheetCancel:, we pretend this button was clicked on. default is -1
@@ -126,20 +126,20 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setUpContainerFrame;
 @end
 
-@protocol TBActionSheetDelegate <NSObject>
+@protocol ZZQActionSheetDelegate <NSObject>
 @optional
 
 // Called when a button is clicked. The view will be automatically dismissed after this call returns
-- (void)actionSheet:(TBActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex;
+- (void)actionSheet:(ZZQActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex;
 // Called when we cancel a view (eg. the user clicks the Home button). This is not called when the user clicks the cancel button.
 // If not defined in the delegate, we simulate a click in the cancel button
-- (void)actionSheetCancel:(TBActionSheet *)actionSheet;
+- (void)actionSheetCancel:(ZZQActionSheet *)actionSheet;
 
-- (void)willPresentActionSheet:(TBActionSheet *)actionSheet;  // before animation and showing view
-- (void)didPresentActionSheet:(TBActionSheet *)actionSheet;  // after animation
+- (void)willPresentActionSheet:(ZZQActionSheet *)actionSheet;  // before animation and showing view
+- (void)didPresentActionSheet:(ZZQActionSheet *)actionSheet;  // after animation
 
-- (void)actionSheet:(TBActionSheet *)actionSheet willDismissWithButtonIndex:(NSInteger)buttonIndex; // before animation and hiding view
-- (void)actionSheet:(TBActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex;  // after animation
+- (void)actionSheet:(ZZQActionSheet *)actionSheet willDismissWithButtonIndex:(NSInteger)buttonIndex; // before animation and hiding view
+- (void)actionSheet:(ZZQActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex;  // after animation
 
 @end
 

@@ -1,23 +1,23 @@
 //
-//  TBActionContainer.m
-//  TBAlertControllerDemo
+//  ZZQActionContainer.m
+//  ZZQAlertControllerDemo
 //
 //  Created by 杨萧玉 on 16/1/31.
 //  Copyright © 2016年 杨萧玉. All rights reserved.
 //
 
-#import "TBActionContainer.h"
+#import "ZZQActionContainer.h"
 #import "TBMacro.h"
-#import "TBActionSheet.h"
-#import "TBActionButton.h"
-#import "UIView+TBAdditions.h"
+#import "ZZQActionSheet.h"
+#import "ZZQActionButton.h"
+#import "UIView+ZZQAdditions.h"
 
-@interface TBActionContainer ()
-@property (weak,nonatomic) TBActionSheet *actionSheet;
+@interface ZZQActionContainer ()
+@property (weak,nonatomic) ZZQActionSheet *actionSheet;
 @end
-@implementation TBActionContainer
+@implementation ZZQActionContainer
 
-- (instancetype)initWithSheet:(TBActionSheet *)actionSheet
+- (instancetype)initWithSheet:(ZZQActionSheet *)actionSheet
 {
     self = [super init];
     if (self) {
@@ -67,12 +67,12 @@
         UIView *colorView = [[UIView alloc] initWithFrame:view.frame];
         colorView.backgroundColor = self.actionSheet.ambientColor;
         colorView.layer.masksToBounds = YES;
-        colorView.tbRectCorner = view.tbRectCorner;
+        colorView.zzqRectCorner = view.zzqRectCorner;
         
         UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
         blurEffectView.frame = view.frame;
         blurEffectView.layer.masksToBounds = YES;
-        blurEffectView.tbRectCorner = view.tbRectCorner;
+        blurEffectView.zzqRectCorner = view.zzqRectCorner;
         
         [self insertSubview:blurEffectView atIndex:0];
         
@@ -81,8 +81,8 @@
         
         [self insertSubview:colorView atIndex:0];
         
-        if ([view isKindOfClass:[TBActionButton class]]) {
-            TBActionButton *btn = (TBActionButton *)view;
+        if ([view isKindOfClass:[ZZQActionButton class]]) {
+            ZZQActionButton *btn = (ZZQActionButton *)view;
             btn.behindColorView = colorView;
         }
         

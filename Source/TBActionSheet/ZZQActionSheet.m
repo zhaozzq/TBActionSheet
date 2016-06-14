@@ -1,29 +1,29 @@
 //
-//  TBActionSheet.m
+//  ZZQActionSheet.m
 //
 //  Created by 杨萧玉 on 15/11/17.
 //  Copyright © 2015年 杨萧玉. All rights reserved.
 //
 
-#import "TBActionSheet.h"
+#import "ZZQActionSheet.h"
 #import "UIImage+BoxBlur.h"
 #import "TBMacro.h"
-#import "TBActionContainer.h"
-#import "TBActionBackground.h"
-#import "TBActionSheetController.h"
-#import "UIWindow+TBAdditions.h"
-#import "UIView+TBAdditions.h"
+#import "ZZQActionContainer.h"
+#import "ZZQActionBackground.h"
+#import "ZZQActionSheetController.h"
+#import "UIWindow+ZZQAdditions.h"
+#import "UIView+ZZQAdditions.h"
 
 const CGFloat bigFragment = 8;
 const CGFloat smallFragment = 0.5;
 const CGFloat headerVerticalSpace = 10;
 const CGFloat blurRadius = 0.7;
 
-@interface TBActionSheet ()
+@interface ZZQActionSheet ()
 @property (nonatomic,readwrite,getter=isVisible) BOOL visible;
-@property (nonatomic,nonnull,strong) TBActionContainer * actionContainer;
-@property (nonatomic,nonnull,strong) TBActionBackground * background;
-@property (nonatomic,nonnull,strong) NSMutableArray<TBActionButton *> *buttons;
+@property (nonatomic,nonnull,strong) ZZQActionContainer * actionContainer;
+@property (nonatomic,nonnull,strong) ZZQActionBackground * background;
+@property (nonatomic,nonnull,strong) NSMutableArray<ZZQActionButton *> *buttons;
 @property (nonatomic,nonnull,strong) NSMutableArray<UIView *> *separators;
 @property (nonatomic,strong,nullable,readwrite) UILabel *titleLabel;
 @property (nonatomic,strong,nullable,readwrite) UILabel *messageLabel;
@@ -31,14 +31,14 @@ const CGFloat blurRadius = 0.7;
 @property (strong, nonatomic) UIWindow *window;
 @end
 
-@implementation TBActionSheet
+@implementation ZZQActionSheet
 
 + (void)initialize
 {
-    if (self != [TBActionSheet class]) {
+    if (self != [ZZQActionSheet class]) {
         return;
     }
-    TBActionSheet *appearance = [self appearance];
+    ZZQActionSheet *appearance = [self appearance];
     appearance.buttonHeight = 56;
     appearance.offsetY = - bigFragment;
     appearance.tintColor = [UIColor blackColor];
@@ -60,9 +60,9 @@ const CGFloat blurRadius = 0.7;
     self = [super initWithFrame:[UIScreen mainScreen].bounds];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
-        _background = [[TBActionBackground alloc] initWithFrame:self.bounds];
+        _background = [[ZZQActionBackground alloc] initWithFrame:self.bounds];
         [self addSubview:_background];
-        _actionContainer = [[TBActionContainer alloc] initWithSheet:self];
+        _actionContainer = [[ZZQActionContainer alloc] initWithSheet:self];
         [self addSubview:_actionContainer];
         _buttons = [NSMutableArray array];
         _separators = [NSMutableArray array];
@@ -75,7 +75,7 @@ const CGFloat blurRadius = 0.7;
     return self;
 }
 
-- (instancetype)initWithTitle:(NSString *)title delegate:(id<TBActionSheetDelegate>)delegate cancelButtonTitle:(nullable NSString *)cancelButtonTitle destructiveButtonTitle:(nullable NSString *)destructiveButtonTitle otherButtonTitles:(nullable NSString *)otherButtonTitles, ... NS_REQUIRES_NIL_TERMINATION
+- (instancetype)initWithTitle:(NSString *)title delegate:(id<ZZQActionSheetDelegate>)delegate cancelButtonTitle:(nullable NSString *)cancelButtonTitle destructiveButtonTitle:(nullable NSString *)destructiveButtonTitle otherButtonTitles:(nullable NSString *)otherButtonTitles, ... NS_REQUIRES_NIL_TERMINATION
 {
     self = [self init];
     if (self) {
@@ -83,28 +83,28 @@ const CGFloat blurRadius = 0.7;
         _delegate = delegate;
         
         if (destructiveButtonTitle) {
-            _destructiveButtonIndex = [self addButtonWithTitle:destructiveButtonTitle style:TBActionButtonStyleDestructive];
+            _destructiveButtonIndex = [self addButtonWithTitle:destructiveButtonTitle style:ZZQActionButtonStyleDestructive];
         }
         
         NSString* eachArg;
         va_list argList;
         if (otherButtonTitles) { // 第一个参数 otherButtonTitles 是不属于参数列表的,
-            [self addButtonWithTitle:otherButtonTitles style:TBActionButtonStyleDefault];
+            [self addButtonWithTitle:otherButtonTitles style:ZZQActionButtonStyleDefault];
             va_start(argList, otherButtonTitles);          // 从 otherButtonTitles 开始遍历参数，不包括 format 本身.
             while ((eachArg = va_arg(argList, NSString*))) {// 从 args 中遍历出参数，NSString* 指明类型
-                [self addButtonWithTitle:eachArg style:TBActionButtonStyleDefault];
+                [self addButtonWithTitle:eachArg style:ZZQActionButtonStyleDefault];
             }
             va_end(argList);
         }
         
         if (cancelButtonTitle) {
-            _cancelButtonIndex = [self addButtonWithTitle:cancelButtonTitle style:TBActionButtonStyleCancel];
+            _cancelButtonIndex = [self addButtonWithTitle:cancelButtonTitle style:ZZQActionButtonStyleCancel];
         }
     }
     return self;
 }
 
-- (instancetype)initWithTitle:(NSString *)title message:(nullable NSString *)message delegate:(id<TBActionSheetDelegate>)delegate cancelButtonTitle:(nullable NSString *)cancelButtonTitle destructiveButtonTitle:(nullable NSString *)destructiveButtonTitle otherButtonTitles:(nullable NSString *)otherButtonTitles, ... NS_REQUIRES_NIL_TERMINATION
+- (instancetype)initWithTitle:(NSString *)title message:(nullable NSString *)message delegate:(id<ZZQActionSheetDelegate>)delegate cancelButtonTitle:(nullable NSString *)cancelButtonTitle destructiveButtonTitle:(nullable NSString *)destructiveButtonTitle otherButtonTitles:(nullable NSString *)otherButtonTitles, ... NS_REQUIRES_NIL_TERMINATION
 {
     self = [self init];
     if (self) {
@@ -113,22 +113,22 @@ const CGFloat blurRadius = 0.7;
         _delegate = delegate;
         
         if (destructiveButtonTitle) {
-            _destructiveButtonIndex = [self addButtonWithTitle:destructiveButtonTitle style:TBActionButtonStyleDestructive];
+            _destructiveButtonIndex = [self addButtonWithTitle:destructiveButtonTitle style:ZZQActionButtonStyleDestructive];
         }
         
         NSString* eachArg;
         va_list argList;
         if (otherButtonTitles) { // 第一个参数 otherButtonTitles 是不属于参数列表的,
-            [self addButtonWithTitle:otherButtonTitles style:TBActionButtonStyleDefault];
+            [self addButtonWithTitle:otherButtonTitles style:ZZQActionButtonStyleDefault];
             va_start(argList, otherButtonTitles);          // 从 otherButtonTitles 开始遍历参数，不包括 format 本身.
             while ((eachArg = va_arg(argList, NSString*))) {// 从 args 中遍历出参数，NSString* 指明类型
-                [self addButtonWithTitle:eachArg style:TBActionButtonStyleDefault];
+                [self addButtonWithTitle:eachArg style:ZZQActionButtonStyleDefault];
             }
             va_end(argList);
         }
         
         if (cancelButtonTitle) {
-            _cancelButtonIndex = [self addButtonWithTitle:cancelButtonTitle style:TBActionButtonStyleCancel];
+            _cancelButtonIndex = [self addButtonWithTitle:cancelButtonTitle style:ZZQActionButtonStyleCancel];
         }
     }
     return self;
@@ -141,30 +141,30 @@ const CGFloat blurRadius = 0.7;
 
 - (NSInteger)addButtonWithTitle:(NSString *)title
 {
-    return [self addButtonWithTitle:title style:TBActionButtonStyleDefault];
+    return [self addButtonWithTitle:title style:ZZQActionButtonStyleDefault];
 }
 
-- (NSInteger)addButtonWithTitle:(NSString *)title style:(TBActionButtonStyle)style
+- (NSInteger)addButtonWithTitle:(NSString *)title style:(ZZQActionButtonStyle)style
 {
     return [self addButtonWithTitle:title style:style handler:nil];
 }
 
-- (NSInteger)addButtonWithTitle:(nullable NSString *)title style:(TBActionButtonStyle)style handler:(void (^ __nullable)( TBActionButton * _Nonnull button))handler
+- (NSInteger)addButtonWithTitle:(nullable NSString *)title style:(ZZQActionButtonStyle)style handler:(void (^ __nullable)( ZZQActionButton * _Nonnull button))handler
 {
-    TBActionButton *button = [TBActionButton buttonWithTitle:title style:style handler:handler];
+    ZZQActionButton *button = [ZZQActionButton buttonWithTitle:title style:style handler:handler];
     [button addTarget:self action:@selector(checkButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.buttons addObject:button];
     NSInteger index = self.buttons.count - 1;
     switch (style) {
-        case TBActionButtonStyleDefault: {
+        case ZZQActionButtonStyleDefault: {
             ;
             break;
         }
-        case TBActionButtonStyleCancel: {
+        case ZZQActionButtonStyleCancel: {
             self.cancelButtonIndex = index;
             break;
         }
-        case TBActionButtonStyleDestructive: {
+        case ZZQActionButtonStyleDestructive: {
             self.destructiveButtonIndex = index;
             break;
         }
@@ -193,7 +193,7 @@ const CGFloat blurRadius = 0.7;
 - (void)setButtonFont:(UIFont *)buttonFont
 {
     if (buttonFont && [self buttonFont] != buttonFont) {
-        for (TBActionButton *btn in self.buttons) {
+        for (ZZQActionButton *btn in self.buttons) {
             btn.titleLabel.font = buttonFont;
         }
     }
@@ -207,7 +207,7 @@ const CGFloat blurRadius = 0.7;
 - (NSInteger)firstOtherButtonIndex
 {
     for (int i=0; i<self.buttons.count; i++) {
-        if (self.buttons[i].style==TBActionButtonStyleDefault) {
+        if (self.buttons[i].style==ZZQActionButtonStyleDefault) {
             return i;
         }
     }
@@ -232,7 +232,7 @@ const CGFloat blurRadius = 0.7;
 
 #pragma mark show action
 /**
- *  设定新的 UIWindow，并将 TBActionSheet 附加在上面
+ *  设定新的 UIWindow，并将 ZZQActionSheet 附加在上面
  */
 - (void)setUpNewWindow
 {
@@ -242,7 +242,7 @@ const CGFloat blurRadius = 0.7;
     
     self.previousKeyWindow = [UIApplication sharedApplication].keyWindow;
     [self.previousKeyWindow interruptGesture];
-    TBActionSheetController *actionSheetVC = [[TBActionSheetController alloc] initWithNibName:nil bundle:nil];
+    ZZQActionSheetController *actionSheetVC = [[ZZQActionSheetController alloc] initWithNibName:nil bundle:nil];
     actionSheetVC.actionSheet = self;
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -314,7 +314,7 @@ const CGFloat blurRadius = 0.7;
     if ([self hasHeader]) {
         lastY += headerVerticalSpace;
         self.actionContainer.header.frame = CGRectMake(0, 0, self.sheetWidth, lastY);
-        if (self.buttons.firstObject.style == TBActionButtonStyleCancel && !self.customView) {
+        if (self.buttons.firstObject.style == ZZQActionButtonStyleCancel && !self.customView) {
             [self addSeparatorLineAt:CGPointMake(0, lastY) isBigFragment:YES];
             lastY = CGRectGetMaxY(self.actionContainer.header.frame) + bigFragment;
         }
@@ -328,7 +328,7 @@ const CGFloat blurRadius = 0.7;
         self.actionContainer.custom.frame = CGRectMake(0, lastY, self.sheetWidth, self.customView.frame.size.height);
         self.customView.center = CGPointMake(self.sheetWidth / 2, self.customView.frame.size.height/2);
         [self.actionContainer.custom addSubview:self.customView];
-        if (self.buttons.firstObject.style == TBActionButtonStyleCancel) {
+        if (self.buttons.firstObject.style == ZZQActionButtonStyleCancel) {
             [self addSeparatorLineAt:CGPointMake(0, lastY) isBigFragment:YES];
             lastY = CGRectGetMaxY(self.actionContainer.custom.frame) + bigFragment;
         }
@@ -339,11 +339,11 @@ const CGFloat blurRadius = 0.7;
     }
     
     //计算按钮坐标并添加样式
-    [self.buttons enumerateObjectsUsingBlock:^(TBActionButton * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.buttons enumerateObjectsUsingBlock:^(ZZQActionButton * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         //inline block, 减少代码冗余
         void(^addDefaultSeparatorBlock)(void) = ^() {
             //上一个 button 如果是 cancel
-            if (idx>0&&self.buttons[idx-1].style == TBActionButtonStyleCancel) {
+            if (idx>0&&self.buttons[idx-1].style == ZZQActionButtonStyleCancel) {
                 [self addSeparatorLineAt:CGPointMake(0, lastY) isBigFragment:YES];
                 lastY += bigFragment;
             }
@@ -354,14 +354,14 @@ const CGFloat blurRadius = 0.7;
         };
         
         switch (obj.style) {
-            case TBActionButtonStyleDefault: {
+            case ZZQActionButtonStyleDefault: {
                 [obj setTitleColor:self.tintColor forState:UIControlStateNormal];
                 if (idx != 0) {
                     addDefaultSeparatorBlock();
                 }
                 break;
             }
-            case TBActionButtonStyleCancel: {
+            case ZZQActionButtonStyleCancel: {
                 [obj setTitleColor:self.cancelButtonColor forState:UIControlStateNormal];
                 if (idx != 0) {
                     [self addSeparatorLineAt:CGPointMake(0, lastY) isBigFragment:YES];
@@ -369,7 +369,7 @@ const CGFloat blurRadius = 0.7;
                 }
                 break;
             }
-            case TBActionButtonStyleDestructive: {
+            case ZZQActionButtonStyleDestructive: {
                 [obj setTitleColor:self.destructiveButtonColor forState:UIControlStateNormal];
                 if (idx != 0) {
                     addDefaultSeparatorBlock();
@@ -418,45 +418,45 @@ const CGFloat blurRadius = 0.7;
     dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         TBStrongSelf(self);
         //设置圆角
-        [self.buttons enumerateObjectsUsingBlock:^(TBActionButton * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self.buttons enumerateObjectsUsingBlock:^(ZZQActionButton * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if (self.buttons.count == 1) {
-                obj.tbRectCorner |= TBRectCornerTop|TBRectCornerBottom;
+                obj.zzqRectCorner |= ZZQRectCornerTop|ZZQRectCornerBottom;
                 if ([self hasHeader]) {
-                    self.actionContainer.header.tbRectCorner |= self.customView ? TBRectCornerTop : TBRectCornerAll;
+                    self.actionContainer.header.zzqRectCorner |= self.customView ? ZZQRectCornerTop : ZZQRectCornerAll;
                 }
                 if (self.customView) {
-                    self.actionContainer.custom.tbRectCorner |= [self hasHeader] ? TBRectCornerBottom : TBRectCornerAll;
+                    self.actionContainer.custom.zzqRectCorner |= [self hasHeader] ? ZZQRectCornerBottom : ZZQRectCornerAll;
                 }
             }
-            else if (obj.style == TBActionButtonStyleCancel) {
-                obj.tbRectCorner = TBRectCornerTop|TBRectCornerBottom;
+            else if (obj.style == ZZQActionButtonStyleCancel) {
+                obj.zzqRectCorner = ZZQRectCornerTop|ZZQRectCornerBottom;
                 if (idx >= 1) {
-                    self.buttons[idx - 1].tbRectCorner |= TBRectCornerBottom;
+                    self.buttons[idx - 1].zzqRectCorner |= ZZQRectCornerBottom;
                 }
                 else {
                     if (self.customView) {
-                        self.actionContainer.custom.tbRectCorner |= TBRectCornerBottom;
+                        self.actionContainer.custom.zzqRectCorner |= ZZQRectCornerBottom;
                     }
                     else if ([self hasHeader]) {
-                        self.actionContainer.header.tbRectCorner |= TBRectCornerBottom;
+                        self.actionContainer.header.zzqRectCorner |= ZZQRectCornerBottom;
                     }
                 }
                 if (idx + 1 <= self.buttons.count - 1) {
-                    self.buttons[idx + 1].tbRectCorner |= TBRectCornerTop;
+                    self.buttons[idx + 1].zzqRectCorner |= ZZQRectCornerTop;
                 }
             }
             else if (idx == 0) {
                 if (![self hasHeader] && !self.customView) {
-                    obj.tbRectCorner |= TBRectCornerTop;
+                    obj.zzqRectCorner |= ZZQRectCornerTop;
                 }
             }
             else if (idx == self.buttons.count - 1) {
-                obj.tbRectCorner |= TBRectCornerBottom;
+                obj.zzqRectCorner |= ZZQRectCornerBottom;
             }
         }];
         
         
-        for (TBActionButton *btn in self.buttons) {
+        for (ZZQActionButton *btn in self.buttons) {
             [btn setCornerRadius:self.rectCornerRadius];
         }
         
@@ -474,7 +474,7 @@ const CGFloat blurRadius = 0.7;
         
         //设置背景风格
         if ([self hasHeader]) {
-            self.actionContainer.header.tbRectCorner |= TBRectCornerTop;
+            self.actionContainer.header.zzqRectCorner |= ZZQRectCornerTop;
             if (self.isBlurEffectEnabled && self.isBackgroundTransparentEnabled) {
                 if (![self.actionContainer useSystemBlurEffectUnderView:self.actionContainer.header]) {
                     
@@ -489,7 +489,7 @@ const CGFloat blurRadius = 0.7;
         
         if (self.customView) {
             if (![self hasHeader]) {
-                self.actionContainer.custom.tbRectCorner |= TBRectCornerTop;
+                self.actionContainer.custom.zzqRectCorner |= ZZQRectCornerTop;
             }
             if (self.isBlurEffectEnabled && self.isBackgroundTransparentEnabled) {
                 if (![self.actionContainer useSystemBlurEffectUnderView:self.actionContainer.custom]) {
@@ -505,7 +505,7 @@ const CGFloat blurRadius = 0.7;
         [self.actionContainer.header setCornerRadius:self.rectCornerRadius];
         [self.actionContainer.custom setCornerRadius:self.rectCornerRadius];
         
-        [self.buttons enumerateObjectsUsingBlock:^(TBActionButton * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self.buttons enumerateObjectsUsingBlock:^(ZZQActionButton * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if (self.isBlurEffectEnabled && self.isBackgroundTransparentEnabled) {
                 if (![self.actionContainer useSystemBlurEffectUnderView:obj]) {
                     UIImage *cuttedImage = cutOriginalBackgroundImageInRect(obj.frame);
@@ -578,7 +578,7 @@ const CGFloat blurRadius = 0.7;
  *
  *  @param sender 点击的按钮对象
  */
-- (void)checkButtonTapped:(TBActionButton *)sender
+- (void)checkButtonTapped:(ZZQActionButton *)sender
 {
     if (![self isVisible]) {
         return;
@@ -603,7 +603,7 @@ const CGFloat blurRadius = 0.7;
             [self.delegate actionSheet:self clickedButtonAtIndex:index];
         }
         if (sender.handler) {
-            __weak __typeof(TBActionButton *)weakSender = sender;
+            __weak __typeof(ZZQActionButton *)weakSender = sender;
             sender.handler(weakSender);
         }
         
@@ -640,9 +640,9 @@ const CGFloat blurRadius = 0.7;
                 [self.delegate actionSheet:self clickedButtonAtIndex:self.cancelButtonIndex];
             }
             
-            TBActionButton *button = self.buttons[self.cancelButtonIndex];
+            ZZQActionButton *button = self.buttons[self.cancelButtonIndex];
             if (button.handler) {
-                __weak __typeof(TBActionButton *)weakButton = button;
+                __weak __typeof(ZZQActionButton *)weakButton = button;
                 button.handler(weakButton);
             }
             

@@ -1,33 +1,33 @@
 //
-//  TBAlertController.m
+//  ZZQAlertController.m
 //
 //  Created by 杨萧玉 on 15/10/29.
 //  Copyright © 2015年 Tencent. All rights reserved.
 //
 
-#import "TBAlertController.h"
+#import "ZZQAlertController.h"
 #import "TBMacro.h"
 #import <objc/runtime.h>
 
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-@interface UIViewController (TBAlertController)
-@property (nonatomic,strong,nullable) TBAlertController *tbAlertController;
+@interface UIViewController (ZZQAlertController)
+@property (nonatomic,strong,nullable) ZZQAlertController *zzqAlertController;
 @end
 
-@implementation UIViewController (TBAlertController)
+@implementation UIViewController (ZZQAlertController)
 
-@dynamic tbAlertController;
+@dynamic zzqAlertController;
 
 #pragma mark - AssociatedObject
 
-- (TBAlertController *)tbAlertController
+- (ZZQAlertController *)zzqAlertController
 {
-    return objc_getAssociatedObject(self, @selector(tbAlertController));
+    return objc_getAssociatedObject(self, @selector(zzqAlertController));
 }
 
-- (void)setTbAlertController:(TBAlertController *)tbAlertController
+- (void)setZzqAlertController:(ZZQAlertController *)zzqAlertController
 {
-    objc_setAssociatedObject(self, @selector(tbAlertController), tbAlertController, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(zzqAlertController), zzqAlertController, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 + (void)load
@@ -63,15 +63,15 @@
 
 - (void)tb_presentViewController:(UIViewController *)viewControllerToPresent animated:(BOOL)flag completion:(void (^)(void))completion
 {
-    if ([viewControllerToPresent isKindOfClass:[TBAlertController class]]) {
-        TBAlertController* controller = (TBAlertController *)viewControllerToPresent;
+    if ([viewControllerToPresent isKindOfClass:[ZZQAlertController class]]) {
+        ZZQAlertController* controller = (ZZQAlertController *)viewControllerToPresent;
         if (kiOS8Later) {
             ((UIAlertController *)controller.adaptiveAlert).view.tintColor = controller.tintColor;
-            [self tb_presentViewController:((TBAlertController *)viewControllerToPresent).adaptiveAlert animated:flag completion:completion];
+            [self tb_presentViewController:((ZZQAlertController *)viewControllerToPresent).adaptiveAlert animated:flag completion:completion];
         }
         else {
             if ([controller.adaptiveAlert isKindOfClass:[UIAlertView class]]) {
-                self.tbAlertController = controller;
+                self.zzqAlertController = controller;
                 controller.ownerController = self;
                 [controller.textFieldHandlers enumerateObjectsUsingBlock:^(void (^configurationHandler)(UITextField *textField), NSUInteger idx, BOOL *stop) {
                     configurationHandler([controller.adaptiveAlert textFieldAtIndex:idx]);
@@ -79,7 +79,7 @@
                 [controller.adaptiveAlert show];
             }
             else if ([controller.adaptiveAlert isKindOfClass:[UIActionSheet class]]) {
-                self.tbAlertController = controller;
+                self.zzqAlertController = controller;
                 controller.ownerController = self;
                 [controller.adaptiveAlert showInView:self.view];
             }
@@ -92,21 +92,21 @@
 
 @end
 
-@interface TBAlertAction ()
+@interface ZZQAlertAction ()
 @property (nullable, nonatomic, readwrite) NSString *title;
-@property (nonatomic,readwrite) TBAlertActionStyle style;
-@property (nullable,nonatomic,strong,readwrite) void (^handler)(TBAlertAction *);
+@property (nonatomic,readwrite) ZZQAlertActionStyle style;
+@property (nullable,nonatomic,strong,readwrite) void (^handler)(ZZQAlertAction *);
 @end
 
-@implementation TBAlertAction
-+ (id)actionWithTitle:(NSString *)title style:(TBAlertActionStyle)style handler:(void (^)(TBAlertAction *))handler
+@implementation ZZQAlertAction
++ (id)actionWithTitle:(NSString *)title style:(ZZQAlertActionStyle)style handler:(void (^)(ZZQAlertAction *))handler
 {
     if (kiOS8Later) {
         UIAlertActionStyle actionStyle = (NSInteger)style;
         return [UIAlertAction actionWithTitle:title style:actionStyle handler:(void (^ __nullable)(UIAlertAction *))handler];
     }
     else {
-        TBAlertAction *action = [[TBAlertAction alloc] init];
+        ZZQAlertAction *action = [[ZZQAlertAction alloc] init];
         action.title = [title copy];
         action.style = style;
         action.handler = handler;
@@ -117,18 +117,18 @@
 
 @end
 
-@interface TBAlertController() <UIActionSheetDelegate, UIAlertViewDelegate>
+@interface ZZQAlertController() <UIActionSheetDelegate, UIAlertViewDelegate>
 @property (nonnull,nonatomic,strong,readwrite) id adaptiveAlert;
 
-@property (nonnull,nonatomic, readwrite) NSMutableArray<TBAlertAction *> *mutableActions;
-@property (nonnull,nonatomic, readwrite) NSArray<TBAlertAction *> *actions;
+@property (nonnull,nonatomic, readwrite) NSMutableArray<ZZQAlertAction *> *mutableActions;
+@property (nonnull,nonatomic, readwrite) NSArray<ZZQAlertAction *> *actions;
 
 @property (nullable, nonatomic, copy, readwrite) NSArray< void (^)(UITextField *textField)> *textFieldHandlers;
 
-@property (nonatomic, readwrite) TBAlertControllerStyle preferredStyle;
+@property (nonatomic, readwrite) ZZQAlertControllerStyle preferredStyle;
 @end
 
-@implementation TBAlertController
+@implementation ZZQAlertController
 
 - (instancetype)init
 {
@@ -141,7 +141,7 @@
             _adaptiveAlert = [[UIActionSheet alloc] init];
             _mutableActions = [NSMutableArray array];
             _textFieldHandlers = @[];
-            _preferredStyle = TBAlertControllerStyleActionSheet;
+            _preferredStyle = ZZQAlertControllerStyleActionSheet;
             ((UIActionSheet *)_adaptiveAlert).delegate = self;
         }
         [self addObserver:self forKeyPath:@"view.tintColor" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
@@ -154,20 +154,20 @@
     [self removeObserver:self forKeyPath:@"view.tintColor"];
 }
 
-+ (instancetype)alertControllerWithTitle:(NSString *)title message:(NSString *)message preferredStyle:(TBAlertControllerStyle)preferredStyle
++ (instancetype)alertControllerWithTitle:(NSString *)title message:(NSString *)message preferredStyle:(ZZQAlertControllerStyle)preferredStyle
 {
-    TBAlertController *controller = [[TBAlertController alloc] init];
+    ZZQAlertController *controller = [[ZZQAlertController alloc] init];
     controller.preferredStyle = preferredStyle;
     if (kiOS8Later) {
         controller.adaptiveAlert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:(NSInteger)preferredStyle];
     }
     else {
         switch (preferredStyle) {
-            case TBAlertControllerStyleActionSheet: {
+            case ZZQAlertControllerStyleActionSheet: {
                 controller.adaptiveAlert = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"%@\n%@",title,message] delegate:controller cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
                 break;
             }
-            case TBAlertControllerStyleAlert: {
+            case ZZQAlertControllerStyleAlert: {
                 controller.adaptiveAlert = [[UIAlertView alloc] initWithTitle:title message:message delegate:controller cancelButtonTitle:nil otherButtonTitles: nil];
                 break;
             }
@@ -181,7 +181,7 @@
 
 #pragma mark - getter&setter
 
-- (NSArray<TBAlertAction *> *)actions
+- (NSArray<ZZQAlertAction *> *)actions
 {
     return [self.mutableActions copy];
 }
@@ -256,22 +256,22 @@
     }
 }
 
-- (TBAlertAction *)preferredAction
+- (ZZQAlertAction *)preferredAction
 {
     if (kiOS9Later) {
-        return (TBAlertAction *)[self.adaptiveAlert preferredAction];
+        return (ZZQAlertAction *)[self.adaptiveAlert preferredAction];
     }
     return nil;
 }
 
-- (void)setPreferredAction:(TBAlertAction *)preferredAction
+- (void)setPreferredAction:(ZZQAlertAction *)preferredAction
 {
     if (kiOS9Later) {
         [self.adaptiveAlert setPreferredAction:preferredAction];
     }
 }
 
-- (void)addAction:(TBAlertAction *)action
+- (void)addAction:(ZZQAlertAction *)action
 {
     if (kiOS8Later) {
         [self.adaptiveAlert addAction:(UIAlertAction *)action];
@@ -282,16 +282,16 @@
         NSInteger buttonIndex = [self.adaptiveAlert addButtonWithTitle:action.title];
         UIColor *textColor;
         switch (action.style) {
-            case TBAlertActionStyleDefault: {
+            case ZZQAlertActionStyleDefault: {
                 textColor = self.tintColor;
                 break;
             }
-            case TBAlertActionStyleCancel: {
+            case ZZQAlertActionStyleCancel: {
                 [self.adaptiveAlert setCancelButtonIndex:buttonIndex];
                 textColor = self.tintColor;
                 break;
             }
-            case TBAlertActionStyleDestructive: {
+            case ZZQAlertActionStyleDestructive: {
                 [self.adaptiveAlert setDestructiveButtonIndex:buttonIndex];
                 textColor = [UIColor redColor];
                 break;
@@ -319,11 +319,11 @@
     }
 }
 
-#pragma mark - TBActionSheetDelegate
+#pragma mark - ZZQActionSheetDelegate
 
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    __weak __typeof(TBAlertAction *)weakAction = self.mutableActions[buttonIndex];
+    __weak __typeof(ZZQAlertAction *)weakAction = self.mutableActions[buttonIndex];
     if (self.mutableActions[buttonIndex].handler) {
         self.mutableActions[buttonIndex].handler(weakAction);
     }
@@ -331,19 +331,19 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    self.ownerController.tbAlertController = nil;
+    self.ownerController.zzqAlertController = nil;
 }
 
 - (void)actionSheetCancel:(UIActionSheet *)actionSheet
 {
-    self.ownerController.tbAlertController = nil;
+    self.ownerController.zzqAlertController = nil;
 }
 
 #pragma mark - UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    __weak __typeof(TBAlertAction *)weakAction = self.mutableActions[buttonIndex];
+    __weak __typeof(ZZQAlertAction *)weakAction = self.mutableActions[buttonIndex];
     if (self.mutableActions[buttonIndex].handler) {
         self.mutableActions[buttonIndex].handler(weakAction);
     }
@@ -351,12 +351,12 @@
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    self.ownerController.tbAlertController = nil;
+    self.ownerController.zzqAlertController = nil;
 }
 
 - (void)alertViewCancel:(UIAlertView *)alertView
 {
-    self.ownerController.tbAlertController = nil;
+    self.ownerController.zzqAlertController = nil;
 }
 #pragma mark - KVO
 

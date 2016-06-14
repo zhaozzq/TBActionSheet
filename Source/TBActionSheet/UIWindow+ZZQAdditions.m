@@ -1,15 +1,15 @@
 //
 //  UIWindow+TBAdditions.m
-//  TBAlertControllerDemo
+//  ZZQAlertControllerDemo
 //
 //  Created by 杨萧玉 on 16/2/15.
 //  Copyright © 2016年 杨萧玉. All rights reserved.
 //
 
-#import "UIWindow+TBAdditions.h"
+#import "UIWindow+ZZQAdditions.h"
 #import "TBMacro.h"
 
-@implementation UIWindow (TBAdditions)
+@implementation UIWindow (ZZQAdditions)
 
 #pragma mark - Public
 

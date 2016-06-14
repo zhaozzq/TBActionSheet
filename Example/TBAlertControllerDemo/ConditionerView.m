@@ -1,14 +1,14 @@
 //
 //  ConditionerView.m
-//  TBAlertControllerDemo
+//  ZZQAlertControllerDemo
 //
 //  Created by 杨萧玉 on 16/4/3.
 //  Copyright © 2016年 杨萧玉. All rights reserved.
 //
 
 #import "ConditionerView.h"
-#import "TBActionSheet.h"
-#import "TBActionContainer.h"
+#import "ZZQActionSheet.h"
+#import "ZZQActionContainer.h"
 
 @interface ConditionerView ()
 @property (weak, nonatomic) IBOutlet UISlider *buttonHeightSlider;
@@ -27,59 +27,59 @@
 
 - (IBAction)buttonHeight:(UISlider *)sender {
     self.actionSheet.buttonHeight = sender.value;
-    [TBActionSheet appearance].buttonHeight = sender.value;
+    [ZZQActionSheet appearance].buttonHeight = sender.value;
 }
 
 - (IBAction)buttonWidth:(UISlider *)sender {
     self.actionSheet.sheetWidth = sender.value * [UIScreen mainScreen].bounds.size.width;
-    [TBActionSheet appearance].sheetWidth = sender.value * [UIScreen mainScreen].bounds.size.width;
+    [ZZQActionSheet appearance].sheetWidth = sender.value * [UIScreen mainScreen].bounds.size.width;
 }
 
 
 - (IBAction)offsetY:(UISlider *)sender {
     self.actionSheet.offsetY = -sender.value;
-    [TBActionSheet appearance].offsetY = -sender.value;
+    [ZZQActionSheet appearance].offsetY = -sender.value;
 }
 
 
 - (IBAction)backgroundTransparentEnabled:(UISwitch *)sender {
     self.actionSheet.backgroundTransparentEnabled = sender.isOn;
-    [TBActionSheet appearance].backgroundTransparentEnabled = sender.isOn;
+    [ZZQActionSheet appearance].backgroundTransparentEnabled = sender.isOn;
     [self refreshActionSheet];
 }
 
 
 - (IBAction)blurEffectEnabled:(UISwitch *)sender {
     self.actionSheet.blurEffectEnabled = sender.isOn;
-    [TBActionSheet appearance].blurEffectEnabled = sender.isOn;
+    [ZZQActionSheet appearance].blurEffectEnabled = sender.isOn;
     [self refreshActionSheet];
 }
 
 
 - (IBAction)cornerRadius:(UISlider *)sender {
     self.actionSheet.rectCornerRadius = sender.value;
-    [TBActionSheet appearance].rectCornerRadius = sender.value;
+    [ZZQActionSheet appearance].rectCornerRadius = sender.value;
 }
 
 
 - (IBAction)animationDuration:(UISlider *)sender {
     self.actionSheet.animationDuration = sender.value;
-    [TBActionSheet appearance].animationDuration = sender.value;
+    [ZZQActionSheet appearance].animationDuration = sender.value;
 }
 
 - (IBAction)animationDampingRatio:(UISlider *)sender {
     self.actionSheet.animationDampingRatio = sender.value;
-    [TBActionSheet appearance].animationDampingRatio = sender.value;
+    [ZZQActionSheet appearance].animationDampingRatio = sender.value;
 }
 
 - (IBAction)animationVelocity:(UISlider *)sender {
     self.actionSheet.animationVelocity = sender.value;
-    [TBActionSheet appearance].animationVelocity = sender.value;
+    [ZZQActionSheet appearance].animationVelocity = sender.value;
 }
 
 - (IBAction)ambientColor:(UISlider *)sender {
     self.actionSheet.ambientColor = [UIColor colorWithHue:sender.value saturation:sender.value brightness:1 alpha:0.5];
-    [TBActionSheet appearance].ambientColor = self.actionSheet.ambientColor;
+    [ZZQActionSheet appearance].ambientColor = self.actionSheet.ambientColor;
 }
 
 - (IBAction)touchUp:(id)sender {
@@ -104,7 +104,7 @@
 {
     self.bounds = CGRectMake(0, 0, self.actionSheet.sheetWidth, self.bounds.size.height);
     [[self.actionSheet valueForKeyPath:@"actionContainer"] removeFromSuperview];
-    TBActionContainer *container = [[TBActionContainer alloc] initWithSheet:self.actionSheet];
+    ZZQActionContainer *container = [[ZZQActionContainer alloc] initWithSheet:self.actionSheet];
     [self.actionSheet setValue:container forKeyPath:@"actionContainer"];
     [self.actionSheet addSubview:container];
     [self.actionSheet setUpLayout];

@@ -1,33 +1,33 @@
 //
-//  TBActionButton.m
-//  TBAlertControllerDemo
+//  ZZQActionButton.m
+//  ZZQAlertControllerDemo
 //
 //  Created by 杨萧玉 on 16/1/31.
 //  Copyright © 2016年 杨萧玉. All rights reserved.
 //
 
-#import "TBActionButton.h"
+#import "ZZQActionButton.h"
 #import "TBMacro.h"
 
 /**
  *  可定制风格和圆角的按钮
  */
-@interface TBActionButton()
+@interface ZZQActionButton()
 
-@property (nonatomic,nullable,strong,readwrite) void (^handler)(TBActionButton * _Nonnull button);
+@property (nonatomic,nullable,strong,readwrite) void (^handler)(ZZQActionButton * _Nonnull button);
 
 @end
 
-@implementation TBActionButton
+@implementation ZZQActionButton
 
-+ (instancetype)buttonWithTitle:(NSString *)title style:(TBActionButtonStyle)style
++ (instancetype)buttonWithTitle:(NSString *)title style:(ZZQActionButtonStyle)style
 {
-    return [TBActionButton buttonWithTitle:title style:style handler:nil];
+    return [ZZQActionButton buttonWithTitle:title style:style handler:nil];
 }
 
-+ (instancetype)buttonWithTitle:(NSString *)title style:(TBActionButtonStyle)style handler:(void (^ __nullable)( TBActionButton * _Nonnull button))handler
++ (instancetype)buttonWithTitle:(NSString *)title style:(ZZQActionButtonStyle)style handler:(void (^ __nullable)( ZZQActionButton * _Nonnull button))handler
 {
-    TBActionButton *button = [TBActionButton buttonWithType:UIButtonTypeCustom];
+    ZZQActionButton *button = [ZZQActionButton buttonWithType:UIButtonTypeCustom];
     button.style = style;
     button.handler = handler;
     button.clipsToBounds = YES;

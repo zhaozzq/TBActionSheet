@@ -1,6 +1,6 @@
 //
 //  UIWindow+TBAdditions.h
-//  TBAlertControllerDemo
+//  ZZQAlertControllerDemo
 //
 //  Created by 杨萧玉 on 16/2/15.
 //  Copyright © 2016年 杨萧玉. All rights reserved.

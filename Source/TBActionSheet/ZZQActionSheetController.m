@@ -1,17 +1,17 @@
 //
-//  TBActionSheetController.m
-//  TBAlertControllerDemo
+//  ZZQActionSheetController.m
+//  ZZQAlertControllerDemo
 //
 //  Created by 杨萧玉 on 16/2/15.
 //  Copyright © 2016年 杨萧玉. All rights reserved.
 //
 
-#import "TBActionSheetController.h"
-#import "TBActionSheet.h"
-#import "UIWindow+TBAdditions.h"
+#import "ZZQActionSheetController.h"
+#import "ZZQActionSheet.h"
+#import "UIWindow+ZZQAdditions.h"
 #import "TBMacro.h"
 
-@implementation TBActionSheetController
+@implementation ZZQActionSheetController
 
 - (void)viewDidLoad
 {
